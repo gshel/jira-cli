@@ -1,15 +1,14 @@
 import configparser
 import logging
 import os
-import pathlib
 
 import click
 from atlassian.jira import Jira
 
-CONFIG_DIRECTORY = os.path.join(pathlib.Path.home(),".jira-cli")
-CONFIG_FILEPATH = os.path.join(CONFIG_DIRECTORY, "config")
+from jiracli import resources
+
 config_parser = configparser.ConfigParser()
-config_parser.read(CONFIG_FILEPATH)
+config_parser.read(resources.CONFIG_FILEPATH)
 
 
 def instantiate_jira_from_config(company: str):
@@ -33,12 +32,12 @@ def config():
 
 def init():
     """Create the `.jira-cli` directory and the config file."""
-    if not os.path.exists(CONFIG_FILEPATH):
+    if not os.path.exists(resources.CONFIG_DIRECTORY):
+        os.mkdir(resources.CONFIG_DIRECTORY)  #might need to change to os.makedirs at some point?
+    if not os.path.exists(resources.CONFIG_FILEPATH):
         logging.debug("Configuration file not found.")
-        if not os.path.exists(CONFIG_DIRECTORY):
-            os.mkdir(CONFIG_DIRECTORY)  #might need to change to os.makedirs at some point?
-        open(CONFIG_FILEPATH, "w").write("# This is the jira-cli config file, where information to connect with various Jira instances can be added manually or interactively via the command `jira-cli config add`.\n\n")
-        logging.info(f"Created configuration file: `{CONFIG_FILEPATH}`")
+        open(resources.CONFIG_FILEPATH, "w").write("# This is the jira-cli config file, where information to connect with various Jira instances can be added manually or interactively via the command `jira-cli config add`.\n\n")
+        logging.info(f"Created configuration file: `{resources.CONFIG_FILEPATH}`")
 
 
 @config.command()
@@ -54,7 +53,7 @@ def add():
         'USERNAME': username,
         'TOKEN': associated_api_key
     }
-    with open(CONFIG_FILEPATH, "a") as config_file:
+    with open(resources.CONFIG_FILEPATH, "a") as config_file:
         config_parser.write(config_file)
     logging.info(f"Added to config: `{company}`")
 

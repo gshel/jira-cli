@@ -5,9 +5,7 @@ import click
 from atlassian import jira
 
 from jiracli.commands.config import instantiate_jira_from_config
-
-#TODO: allow users to decide what datetime format they want to use via config file.
-DATETIME_FORMAT = '%m/%d/%y %H:%M'
+from jiracli.resources import DATETIME_FORMAT
 
 
 @click.group(invoke_without_command=True)
