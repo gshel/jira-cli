@@ -1,0 +1,3 @@
+.mypy_cache
+jira_cli.egg-info
+__pycache__
