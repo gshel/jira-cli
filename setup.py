@@ -41,8 +41,6 @@ setup(
         "click",
         "pathlib",
         "pbr",
-        "sphinx",
-        "sphinx_rtd_theme",
     ],
     # List additional groups of dependencies here (e.g. development
     # dependencies). Users will be able to install these using the "extras"
