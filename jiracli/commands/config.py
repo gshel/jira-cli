@@ -1,11 +1,11 @@
-import click
-import os
-import logging
-import pathlib
 import configparser
+import logging
+import os
+import pathlib
+
+import click
 from atlassian.jira import Jira
 from requests import exceptions
-
 
 CONFIG_DIRECTORY = os.path.join(pathlib.Path.home(),".jira-cli")
 CONFIG_FILEPATH = os.path.join(CONFIG_DIRECTORY, "config")
@@ -13,10 +13,10 @@ config_parser = configparser.ConfigParser()
 config_parser.read(CONFIG_FILEPATH)
 
 
-def instanciate_jira_from_config(company: str):
+def instantiate_jira_from_config(company: str):
     uppercase_company = company.upper()
     return Jira(
-        url=config_parser[uppercase_company]['URL'],
+        url=config_parser[uppercase_company]['URL'].rstrip('/'),
         username=config_parser[uppercase_company]['USERNAME'],
         password=config_parser[uppercase_company]['TOKEN']
     )
@@ -59,7 +59,7 @@ def validate():
     """Validate the config; if a Jira instance is not publically accessible from the internet, connect to its private network via VPN, then try again."""
     sections = config_parser.sections()
     for company in sections:
-        jira = instanciate_jira_from_config(company)
+        jira = instantiate_jira_from_config(company)
         try:
             jira.get_configurations_of_jira()
             validated = True
