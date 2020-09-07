@@ -1,9 +1,11 @@
-import click
 import logging
-import jiracli
+import os
 import sys
 from importlib import metadata as pkgmd
-import os
+
+import click
+
+import jiracli
 
 
 def _package_deps(package, deps=None, ignore=()):

@@ -1,10 +1,10 @@
-import click
 import logging.config
 
+import click
+
 from jiracli import _logging
-from jiracli.commands import config
-from jiracli.commands import version
-from jiracli.commands import issue
+from jiracli.commands import config, issue, version
+
 
 @click.group()
 @click.option("-v", "--verbose", is_flag=True, help="Enable DEBUG level logging.")
