@@ -1,3 +1,5 @@
 .mypy_cache
 jira_cli.egg-info
 __pycache__
+.pytest_cache
+.vscode
