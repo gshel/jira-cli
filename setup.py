@@ -84,9 +84,9 @@ setup(
         [console_scripts]
         jira-cli=jiracli.cli:entry_point
     ''',
-    # project_urls={
-    #     "Bug Reports": "",
-    #     "Source": "",
-    # },
+    project_urls={
+        "Bug Reports": "https://github.com/gshel/jira-cli/issues",
+        "Source": "https://github.com/gshel/jira-cli",
+    },
 )
 
