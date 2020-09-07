@@ -6,6 +6,7 @@ from atlassian import jira
 
 from jiracli.commands.config import instantiate_jira_from_config
 
+#TODO: allow users to decide what datetime format they want to use via config file.
 DATETIME_FORMAT = '%m/%d/%y %H:%M'
 
 
@@ -14,8 +15,10 @@ DATETIME_FORMAT = '%m/%d/%y %H:%M'
 @click.argument("ticket")
 @click.pass_context
 def issue(ctx, company: str, ticket: str):
-    """Return basic information about a ticket; subcommands also available.
+    """Interact with a ticket; returns ticket info when used without a subcommand.
     \f
+    :param ctx: Click context; automatically passed by group.
+    :type ctx: click.core.Context
     :param company: Must be one of the companies configured in ``.jira-cli/config``.
     :type company: str
     :param ticket: Issue key, e.g. PROJECT-###.
@@ -39,6 +42,8 @@ def issue(ctx, company: str, ticket: str):
 def log(ctx, time: str, started: str = None, comment: str = None):
     """Log time into a ticket.
     \f
+    :param ctx: Click context; automatically passed by group.
+    :type ctx: click.core.Context
     :param time: Amount of time spent, e.g. ``2w 4d 6h 45m``.
     :type time: str
     :param started: Time started at, format ``%m/%d/%y %H:%M``.
@@ -57,7 +62,11 @@ def log(ctx, time: str, started: str = None, comment: str = None):
 
 
 def get(ctx):
-    """Return information about a ticket."""
+    """Return information about a ticket.
+    \f
+    :param ctx: Click context; automatically passed by group.
+    :type ctx: click.core.Context
+    """
     jira = ctx.obj['jira']
     returned_information = jira.issue(key=ctx.obj['ticket'])
     click.echo()

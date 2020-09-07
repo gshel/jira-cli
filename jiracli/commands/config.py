@@ -13,6 +13,11 @@ config_parser.read(CONFIG_FILEPATH)
 
 
 def instantiate_jira_from_config(company: str):
+    """Return a Jira instance to interact with.
+    \f
+    :param company: Name of the company to connect to (from config).
+    :type company: str
+    """
     uppercase_company = company.upper()
     return Jira(
         url=config_parser[uppercase_company]['URL'].rstrip('/'),
@@ -24,6 +29,7 @@ def instantiate_jira_from_config(company: str):
 @click.group()
 def config():
     """Configure connections to multiple Jira instances."""
+
 
 def init():
     """Create the `.jira-cli` directory and the config file."""
@@ -37,7 +43,7 @@ def init():
 
 @config.command()
 def add():
-    """Interactively add a company, its Jira URL, your username, and your API key to the config."""
+    """Interactively add a company, its Jira URL, a username, and an API key (preferred) or password to the config."""
     init()
     company = input("COMPANY: ")
     jira_url = input("JIRA URL: ")
@@ -63,6 +69,6 @@ def validate():
             jira.get_configurations_of_jira()
             validated = True
         except exceptions.HTTPError:
-            logging.error(exc_info=True)
+            logging.debug(exc_info=True)
             validated = False
         click.echo(f"{company}: {validated}")
