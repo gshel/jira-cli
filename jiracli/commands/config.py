@@ -5,7 +5,6 @@ import pathlib
 
 import click
 from atlassian.jira import Jira
-from requests import exceptions
 
 CONFIG_DIRECTORY = os.path.join(pathlib.Path.home(),".jira-cli")
 CONFIG_FILEPATH = os.path.join(CONFIG_DIRECTORY, "config")

@@ -1,11 +1,7 @@
-import configparser
 import logging
-import re
 from datetime import datetime
-from pprint import pprint
 
 import click
-import requests
 from atlassian import jira
 
 from jiracli.commands.config import instantiate_jira_from_config
