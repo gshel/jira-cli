@@ -70,7 +70,7 @@ def version(debug: bool):
     if not debug:
         click.echo(jiracli.__version__)
         return
-    click.echo(f"\nPlease cop/paste the following info into any bug reports:\n")
+    click.echo(f"\nPlease copy/paste the following info into any bug reports:\n")
     click.echo(f"jira-cli:   v{jiracli.__version__}")
     indent = 12
     pyversion = sys.version.replace('\n', '\n' + ' ' * indent)
