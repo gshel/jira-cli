@@ -33,11 +33,13 @@ def config():
 def init():
     """Create the `.jira-cli` directory and the config file."""
     if not os.path.exists(resources.CONFIG_DIRECTORY):
+        logging.debug(f"Not found: {resources.CONFIG_DIRECTORY}")
         os.mkdir(resources.CONFIG_DIRECTORY)  #might need to change to os.makedirs at some point?
+        logging.info(f"Created directory: {resources.CONFIG_DIRECTORY}")
     if not os.path.exists(resources.CONFIG_FILEPATH):
-        logging.debug("Configuration file not found.")
+        logging.debug(f"Not found: {resources.CONFIG_FILEPATH}")
         open(resources.CONFIG_FILEPATH, "w").write("# This is the jira-cli config file, where information to connect with various Jira instances can be added manually or interactively via the command `jira-cli config add`.\n\n")
-        logging.info(f"Created configuration file: `{resources.CONFIG_FILEPATH}`")
+        logging.info(f"Created configuration file: {resources.CONFIG_FILEPATH}")
 
 
 @config.command()
