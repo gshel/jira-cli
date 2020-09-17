@@ -44,4 +44,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .
           commit_message: "[generate-docs] Generate and publish docs"
-          publish_branch: master
