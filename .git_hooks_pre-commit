@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+python3.8 -m pytest --cov=opsmodules -vv 
+python3.8 -m black --line-length 120 .
