@@ -1,0 +1,5 @@
+[ACME]
+url = https://acme.atlassian.net/
+username = sara@acme.com
+token = aaabbbccc123456
+

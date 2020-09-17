@@ -7,9 +7,6 @@ from atlassian.jira import Jira
 
 from jiracli import resources
 
-config_parser = configparser.ConfigParser()
-config_parser.read(resources.CONFIG_FILEPATH)
-
 
 def instantiate_jira_from_config(company: str):
     """Return a Jira instance to interact with.
@@ -18,10 +15,13 @@ def instantiate_jira_from_config(company: str):
     :type company: str
     """
     uppercase_company = company.upper()
+    url = resources.JIRACLI_CONFIGPARSER[uppercase_company]['url']
+    username = resources.JIRACLI_CONFIGPARSER[uppercase_company]['username']
+    password = resources.JIRACLI_CONFIGPARSER[uppercase_company]['token']
     return Jira(
-        url=config_parser[uppercase_company]['URL'].rstrip('/'),
-        username=config_parser[uppercase_company]['USERNAME'],
-        password=config_parser[uppercase_company]['TOKEN']
+        url=url.rstrip('/'),
+        username=username,
+        password=password
     )
 
 
@@ -50,20 +50,20 @@ def add():
     jira_url = input("JIRA URL: ")
     username = input("USERNAME: ")
     associated_api_key = input("API KEY: ")
-    config_parser[company.upper()] = {
-        'URL': jira_url,
-        'USERNAME': username,
-        'TOKEN': associated_api_key
+    resources.JIRACLI_CONFIGPARSER[company.upper()] = {
+        'url': jira_url,
+        'username': username,
+        'token': associated_api_key
     }
     with open(resources.CONFIG_FILEPATH, "a") as config_file:
-        config_parser.write(config_file)
+        resources.JIRACLI_CONFIGPARSER.write(config_file)
     logging.info(f"Added to config: `{company}`")
 
 
 @config.command()
 def validate():
     """Validate the config; if a Jira instance is not publically accessible from the internet, connect to its private network via VPN, then try again."""
-    sections = config_parser.sections()
+    sections = resources.JIRACLI_CONFIGPARSER.sections()
     for company in sections:
         jira = instantiate_jira_from_config(company)
         try:
